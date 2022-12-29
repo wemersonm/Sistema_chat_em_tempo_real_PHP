@@ -2,14 +2,14 @@
 *{
 	margin: 0;
 	padding: 0;
+	box-sizing: border-box;
+	
 }
 
 body{
 	font-family: 'Titillium Web', sans-serif;
-	
 	height: 100vh;
-	display: flex;
-	flex-direction: column;
+	overflow-y: hidden;
 }
 header{
 	background-color:#008B8B;
@@ -27,6 +27,7 @@ header nav ul li {
 	margin: 0 10px;
 	list-style: none;	
 	display: inline-block;
+
 }
 header a{
 	text-decoration: none;
@@ -34,68 +35,59 @@ header a{
 	
 }
 main{
-	height: 100vh;
+	height: 100%;
+	margin: 10px;
 }
-
-footer{
-	background-color: #008B8B;
-	height: 60px;
-}
-
-
 
 /*MAIN - HOME*/
+main section{
+	height: 100%;
+}
 section .container{
-	
-
+	height: 100%;
+	display: grid;
+	grid-template-rows: 5% 65% 20%;
+	gap: 15px;
 }
 .content-header {
 	width: 100%;
+	height: 100%;
+	
 }
 .content-header nav{
+
 	display: flex;
 	justify-content: space-around;
 }
 .content-header nav ul{
+	width: 100%;
 	display: flex;
 	align-items: center;
-	justify-content: space-around;
-	text-align: center;	
-	flex: 1;
+	text-align: center;		
+	height: 50px;
+	margin: 0 10px;
 
 }
 .content-header nav ul li{
 	
-	text-align: center;
+	text-align: center;	
 	width: 100%;
 	list-style: none;
-	line-height: 40px;
-	font-size: 20px;
+	font-size: 16px;
 	color: #008B8B;
+	white-space: nowrap;
+	border: 1px solid lightgray;
+	border-width: 0 1px;
 }
 
 .content-header nav ul li:hover{
 	background-color: #ccf2ff;
 }
-.content-body{
-	background-color: #f1f5f4;
-	border-radius: 7px;
-	max-width: 800px;
-	margin:10px auto;
-	height: 380px;
-}
-.content-footer{
-	background-color: #5F9EA0;
-	border-radius: 7px;
-	max-width: 800px;
-	margin: 0 auto;
-	height: 100px;
-
-}
 nav ul li.active{
 	font-weight: bold;
-	background-color: #008B8B;
+	background-color: #003333;
 	color: #FFF;
+	border-radius: 7px;
 }
 .content-header nav ul li.active:hover{
 	background-color: #008B8B;
@@ -109,11 +101,7 @@ nav ul li.active{
 	background-color: #ffb3b3;
 	cursor: pointer;
 	width: 50px;
-	border: none;
-
-
-
-	
+	border: none;	
 }
 .content-header nav .add_tab:hover{
 	transition: 0.4s;
@@ -121,6 +109,52 @@ nav ul li.active{
 	color:#FFF;
 	
 }
+/*body*/
+.content-body{
+	width: 100%;
+	overflow-y: auto;
+	padding: 20px;
+	border: 1px solid purple;
+	border-radius: 8px;
+}
+.message{
+	text-align: justify;
+	width: 100%;
+	border: 2px solid blue;
+	
+}
+/*footer*/
+
+.content-footer{
+	width: 100%;
+	height: 100%;
+
+}
+.sender-area{
+	display: grid;
+	grid-template-columns: 95% 5%;
+	width: 100%;
+	padding: 10px;	
+	column-gap: 5px;
+
+}
+#sender_input{
+	width: 100%;
+	outline:none;
+	border: none;
+	overflow-y: auto;
+	resize: none;
+	padding: 5px;
+	font-size: 15px;
+	border:1px solid rosybrown;
+	height: 70px;
+}
+.sender-area button{
+	height: 40px;
+	align-self: center;
+}
+/*others*/
+
 
 /*MODAL*/
 
@@ -142,3 +176,28 @@ nav ul li.active{
 	border-radius: 5px;
 
 }
+
+#group-list	button{
+	display: block;
+	margin: 7px 0;
+	font-size: 16px;
+	width: 100%;
+	height: 35px;
+	border: 1px solid #008B8B;
+	border-radius: 7px;
+	background-color: #fff;
+	color:#008B8B;
+
+}												
+#group-list	button:hover{
+	background-color: #f2f2f2;
+}
+
+
+
+
+@media (max-width:768px)
+{
+	
+}
+

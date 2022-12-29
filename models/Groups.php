@@ -12,6 +12,16 @@
 			}
 			return $array;
 		}
+
+		public function insertGroup($name){
+
+			$stmt = $this->db->prepare("INSERT INTO chat.groups (name) VALUES(:name)");
+			$stmt->bindValue(":name",$name);
+			if($stmt->execute()){
+				return true;
+			}
+			return false;
+		}
 		
 	}
  ?>

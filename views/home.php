@@ -9,10 +9,21 @@
 		</nav>
 		</div>
 		<div class="content-body">
-			chat
+			<div class="message">
+				<div class="message-header">
+					<span></span>
+					<span></span>
+				</div>
+				<div class="message-body">
+					
+				</div>
+			</div>
 		</div>
 		<div class="content-footer">
-			footer
+			<div class="sender-area">
+				<textarea id="sender_input" placeholder="Digite aqui sua mensagem"></textarea>
+				<button id="btn-send">Enviar</button>
+			</div>
 		</div>
 	</div>
 </section>

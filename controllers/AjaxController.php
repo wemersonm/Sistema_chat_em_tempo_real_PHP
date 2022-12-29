@@ -11,7 +11,7 @@
 	   		
 	   		if(!$this->users->verifyLogin()){
 	   			$array = array(
-	   				status => '0'
+	   				'status' => '0'
 	   				);
 	   			echo json_encode($array);
 	   			exit;
@@ -32,6 +32,40 @@
 			$groups = new Groups();
 
 			$array['listGroups'] = $groups->getListGroups();
+			echo json_encode($array);
+			exit;
+		}
+
+		public function add_group(){
+			$array = array('status' => '1','error' => '0');
+
+			$groups = new Groups();
+
+			if(isset($_POST['name']) && !empty($_POST['name'])){
+				$name = strip_tags($_POST['name']);
+				$groups->insertGroup($name);
+
+			}else{
+				$array['error'] = '1';
+				$array['errorMsg'] = 'Nome do grupo não informado';
+			}
+
+			echo json_encode($array);
+		}
+
+		public function add_messages(){
+			$messages = new Messages();
+			$array = array('status'=> '1','error'=>'0');
+			if(!empty($_POST['msg']) && !empty($_POST['id_group'])){
+				$msg = strip_tags($_POST['msg']);
+				$id_group = $_POST['id_group'];
+				$uid = $this->users->getUid();
+				$messages->insertMessage($uid,$id_group,$msg);
+			}else{
+				$array['error'] = '1';
+				$array['errorMsg'] = 'Mensagem não informada';
+			}
+
 			echo json_encode($array);
 			exit;
 		}
