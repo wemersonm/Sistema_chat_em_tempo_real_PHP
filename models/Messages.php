@@ -15,6 +15,17 @@
 			return false;
 		}
 
+		public function getMessages($last_time,$id_groups){
+			$array = array();
+			$stmt = $this->db->prepare('SELECT * FROM chat.messages WHERE date_msg > :date_msg AND 
+				id_group IN('.implode(',',$id_groups).')';
+			$stmt->bindValue(":date_msg",$last_time);
+			$stmt->execute();
+			if($stmt->rowCount()){
+				$array = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			}
+			return $array;
+		}
 
 
 	}

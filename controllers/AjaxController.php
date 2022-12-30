@@ -70,6 +70,19 @@
 			exit;
 		}
 
+		public function getMessages(){
+			$array = array('status'=> '1');
+			$messages = new Messages();
+
+			set_time_limit(60);
+			$ult_msg = date('Y-m-d H:i:s');
+			if(!empty($_GET['last_time'])){
+				$ult_msg = $_GET['last_time'];
+			}
+			echo json_encode($array);
+			exit;
+		}
+
 		
 	}
  ?>
