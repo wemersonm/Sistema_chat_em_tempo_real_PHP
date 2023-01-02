@@ -1,9 +1,6 @@
 const btn = document.querySelector(".add_tab");
-const bodyH = document.body.clientHeight;
-console.log(bodyH);
-const div = document.querySelector(".content-body");
-div.scrollTop = div.scrollHeight;
 
+chat.chatActivity();
 
 btn.addEventListener('click', e =>{
 	const modal_bg = document.querySelector('.modal_bg');
@@ -64,20 +61,7 @@ btn.addEventListener('click', e =>{
 		 document.querySelector('#sender_input').value = '';
 		 chat.sendMessage(msg);
 	});
-
-
-		
 	
-
-
-
-
-
-
-
-
-	
-
 function fecharModal(){
 	document.querySelector('.modal_bg').style.display = 'none';
 }

@@ -1,6 +1,7 @@
 var chat = {
 	groups:[],
 	activeGroup:0,
+	lastTime:'',
 
 	setGroup: function(id,name){
 		let found = false;
@@ -15,9 +16,7 @@ var chat = {
 				id:id,
 				name:name,
 				messages:[
-				{id:1,senderId:1,senderName:"WM",senderDate:'00:02',msg:"Ankara Messi"},
-				{id:2,senderId:1,senderName:"WM",senderDate:'00:04',msg:"Gol"+name}
-				
+				{id:'',senderId:'',senderName:'',senderDate:'',msg:""}	
 				]
 			});
 		}
@@ -93,7 +92,7 @@ var chat = {
 		this.showMessages();
 	},
 	showMessages:function(){
-		document.querySelector('.message').innerHTML = '';
+		document.querySelector('.content-body').innerHTML = '';
 		if(this.activeGroup != 0){
 			var msgs = [];
 
@@ -103,17 +102,20 @@ var chat = {
 				}
 			}
 			for(let i in msgs){
-				let html = '';
-				html+='<div class="message">';
-				html+='<div class="message-header">';
-				html+='<span>'+msgs[i].senderName+'</span>';
-				html+='<span>'+msgs[i].senderDate+'</span>';
-				html+='</div>';
-				html+='<div class="message-body">';
-				html+='<p>'+msgs[i].msg+'</p>'
-				html+='</div>';
-				html+='</div>';
-				document.querySelector('.message').innerHTML = html;
+				let html="<div class='message'>";
+				html+="<div class='message-header'>";
+				html+="<span>"+msgs[i].senderName+"</span>";
+				html+="<span>"+msgs[i].senderDate+"</span>";
+				html+="</div>";
+				html+="<div class='message-body'>";
+				html+="<p>"+msgs[i].msg+"</p>"
+				html+="</div>";
+				html+="</div>";
+		
+				document.querySelector('.content-body').innerHTML+=html;
+
+
+				// $('.content-body').append(html);
 			}
 				
 			
@@ -141,6 +143,70 @@ var chat = {
 			.catch(e=> console.log(e)); 
 
 		}
+	},
+	updateLasTime:function(last_time){
+		this.lastTime = last_time;
+	},
+	insertMessage:function(dataMsg){
+		for(let i in this.groups){
+			if(this.groups[i].id == dataMsg.id_group){
+				let date_msg = dataMsg.date_msg.split(' ');
+				date_msg = date_msg[0];
+
+
+				this.groups[i].messages.push({
+					id:dataMsg.id,
+					senderId:dataMsg.id_user,
+					senderName:dataMsg.user_name,
+					senderDate:date_msg,
+					msg:dataMsg.msg
+
+				});
+			}
+		}
+	},
+	chatActivity:function(){
+		let allGroups = this.getGroups();
+		let groups= [];
+		for(let i in allGroups){
+			groups.push(allGroups[i].id); 
+		}
+		
+		const last_time= this.lastTime;
+
+		const url = BASE_URL+'ajax/getMessages?last_time=' + encodeURIComponent(JSON.stringify(last_time)) 
+		+ '&groups=' + encodeURIComponent(groups);
+		if(groups.length > 0){
+			fetch(url,{
+				method:'GET'
+			}).then(response=>response.text())
+			.then(data=>{
+				 json = JSON.parse(data);
+				if(json.status == '1'){
+					chat.updateLasTime(json.last_time);
+
+					for(let i in json.msgs){
+						chat.insertMessage(json.msgs[i]);
+					}
+					chat.showMessages();					
+				}
+				else{
+					window.location.href = BASE_URL+'login'
+				}
+				chat.chatActivity();
+			})
+			.catch(e=>{
+				console.log(e);
+				console.log('entou catch');	
+				chat.chatActivity();
+			});
+		}else{
+			setTimeout(function(){
+				chat.chatActivity();
+			},1000)
+		}
+		
 	}
+
 
 };

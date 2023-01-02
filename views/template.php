@@ -43,6 +43,11 @@
 <script type="text/javascript">
 	var BASE_URL = '<?php echo BASE_URL; ?>';
 </script>
+<script
+  src="https://code.jquery.com/jquery-3.6.3.js"
+  integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+  crossorigin="anonymous"></script>
+  
 <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/chat.js"></script>
 <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/script.js"></script>
 </body>

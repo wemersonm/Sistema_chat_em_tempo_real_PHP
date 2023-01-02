@@ -71,14 +71,38 @@
 		}
 
 		public function getMessages(){
-			$array = array('status'=> '1');
+			$array = array('status'=> '1', 'msgs'=>array(), 'last_time'=>date('Y-m-d H:i:s'));
 			$messages = new Messages();
 
 			set_time_limit(60);
 			$ult_msg = date('Y-m-d H:i:s');
-			if(!empty($_GET['last_time'])){
+			if(!empty($_GET['last_time']) && strlen($_GET['last_time'] == 19) ){
 				$ult_msg = $_GET['last_time'];
 			}
+
+			$groups = array();
+			if(!empty($_GET['groups'])){
+				$groups = $_GET['groups'];
+			}
+			$groups = explode(',',$groups);
+			// print_r($ult_msg);
+			// echo "--------------------- <br>";
+			// echo gettype($groups);
+			// print_r($groups);exit;
+			while(true){
+				session_write_close();
+				$msgs = $messages->getMessage($ult_msg,$groups);
+
+				if(count($msgs) > 0){
+					$array['msgs'] = $msgs;
+					$array['last_time'] = date('Y-m-d H:i:s'); 
+					break;
+				}else{
+					sleep(2);
+					continue;
+				}
+			}
+
 			echo json_encode($array);
 			exit;
 		}

@@ -15,10 +15,13 @@
 			return false;
 		}
 
-		public function getMessages($last_time,$id_groups){
+		public function getMessage($last_time,$id_groups){
 			$array = array();
-			$stmt = $this->db->prepare('SELECT * FROM chat.messages WHERE date_msg > :date_msg AND 
-				id_group IN('.implode(',',$id_groups).')';
+
+			$stmt = $this->db->prepare("SELECT *,
+			(select username from chat.users WHERE messages.id_user = users.id) as user_name 
+				FROM chat.messages WHERE date_msg > :date_msg
+				AND id_group IN (".(implode(",", $id_groups)).")");
 			$stmt->bindValue(":date_msg",$last_time);
 			$stmt->execute();
 			if($stmt->rowCount()){
