@@ -2,6 +2,8 @@ var chat = {
 	groups:[],
 	activeGroup:0,
 	lastTime:'',
+	msgRequest:null,
+	
 
 	setGroup: function(id,name){
 		let found = false;
@@ -15,15 +17,17 @@ var chat = {
 			this.groups.push({
 				id:id,
 				name:name,
-				messages:[
-				{id:'',senderId:'',senderName:'',senderDate:'',msg:""}	
-				]
+				messages:[]
 			});
 		}
 		if(this.groups.length == 1){
 			this.setActiveGroup(id);
 		}
 		this.updateGroupView();
+
+		if(this.msgRequest != null){
+			 controller.abort();
+		}
 	},
 	getGroups:function(){
 			return this.groups;
@@ -61,7 +65,11 @@ var chat = {
 	updateGroupView: function(){
 		let html = '';
 		for(let i in this.groups){
-			html+='<li data-id="'+this.groups[i].id+'">'+this.groups[i].name+'</li>';
+			html+='<li data-id="'+this.groups[i].id+'">';
+			html+='<div class="group_close">X</div>'
+			html+='<div class="group_name">'+this.groups[i].name+'</div>';
+			html+='</li>';
+
 		}
 		document.querySelector('.content-header nav ul').innerHTML = html;
 		this.loadConversation();
@@ -113,9 +121,7 @@ var chat = {
 				html+="</div>";
 		
 				document.querySelector('.content-body').innerHTML+=html;
-
-
-				// $('.content-body').append(html);
+			
 			}
 				
 			
@@ -171,20 +177,21 @@ var chat = {
 		for(let i in allGroups){
 			groups.push(allGroups[i].id); 
 		}
-		
 		const last_time= this.lastTime;
 
 		const url = BASE_URL+'ajax/getMessages?last_time=' + encodeURIComponent(JSON.stringify(last_time)) 
 		+ '&groups=' + encodeURIComponent(groups);
+		
 		if(groups.length > 0){
-			fetch(url,{
-				method:'GET'
+			controller = new AbortController();
+			this.msgRequest = fetch(url,{
+				method:'GET',
+				signal: controller.signal
 			}).then(response=>response.text())
 			.then(data=>{
 				 json = JSON.parse(data);
 				if(json.status == '1'){
 					chat.updateLasTime(json.last_time);
-
 					for(let i in json.msgs){
 						chat.insertMessage(json.msgs[i]);
 					}
@@ -193,13 +200,13 @@ var chat = {
 				else{
 					window.location.href = BASE_URL+'login'
 				}
-				chat.chatActivity();
+			}).catch(e=>{
+				console.log(e);		
 			})
-			.catch(e=>{
-				console.log(e);
-				console.log('entou catch');	
+			.finally(f=>{
 				chat.chatActivity();
 			});
+			
 		}else{
 			setTimeout(function(){
 				chat.chatActivity();

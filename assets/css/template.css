@@ -79,6 +79,13 @@ section .container{
 	border: 1px solid lightgray;
 	border-width: 0 1px;
 }
+.content-header nav ul li.group_close{
+	width: 30px;
+}
+.content-header nav ul li.group_name{
+	flex: 1;
+}
+
 
 .content-header nav ul li:hover{
 	background-color: #ccf2ff;
@@ -120,7 +127,18 @@ nav ul li.active{
 .message{
 	text-align: justify;
 	width: 100%;
-	border: 2px solid blue;
+	border: 1px solid lightgray;
+	padding: 6px;
+	margin: 5px 0 ;
+	
+}
+.message-header span:nth-child(2){
+	font-size: 13px;
+	color: #A9A9A9;
+	margin: 20px;
+}
+.message-header span:nth-child(1){
+	font-weight: bold;
 	
 }
 /*footer*/
