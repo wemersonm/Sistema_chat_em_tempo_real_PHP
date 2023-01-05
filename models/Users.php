@@ -147,5 +147,16 @@
 			
 		}
 
+		public function clearAllGroups(){
+
+			$stmt = $this->db->prepare("UPDATE chat.users SET users.groups = '' WHERE id=:id");
+			$stmt->bindValue(':id',$this->uid);
+			$stmt->execute();
+			if($stmt->rowCount() > 0){
+				return true;
+			}
+			return false;
+
+		}
 	}
  ?>

@@ -153,5 +153,12 @@
 			echo json_encode($array);
 			exit;
 		}
+
+		public function clearLastGroup(){
+			// $array = array('status'=> '1', 'error'=>'0');
+			$this->users->clearAllGroups();
+			// echo json_encode($array);
+			
+		}
 	}
  ?>

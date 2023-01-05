@@ -43,6 +43,7 @@ var chat = {
 				this.setActiveGroup(this.groups[0].id);		
 			}else{
 				this.activeGroup = 0;
+				chat.closeLastGroup();
 			}
 		}
 		
@@ -50,6 +51,27 @@ var chat = {
 		if(this.msgRequest != null){
 			 controller.abort();
 		}
+	},
+	closeLastGroup(){
+
+		const url = BASE_URL+'ajax/clearLastGroup';
+		fetch(url,{
+			method:'GET',
+		}).then(response=>response.text())
+		.then(data=>{
+			 json = JSON.parse(data);
+			if(json.status == '1'){					
+			}
+			else{
+				window.location.href = BASE_URL+'login'
+			}
+		}).catch(e=>{
+				
+		})
+		.finally(f=>{
+			
+		});
+
 	},
 	getGroups:function(){
 			return this.groups;
