@@ -34,6 +34,11 @@ header a{
 	color: #FFF;
 	
 }
+p.header-username{
+	font-weight: bold;
+	color: gold;
+	font-size: 20px;
+}
 main{
 	height: 100%;
 	margin: 10px;
@@ -78,14 +83,19 @@ section .container{
 	white-space: nowrap;
 	border: 1px solid lightgray;
 	border-width: 0 1px;
+	display: grid;
+	grid-template-columns: 95% 5%
+	
+	
 }
-.content-header nav ul li.group_close{
-	width: 30px;
+.content-header nav ul li .group_name{
+	
+	
 }
-.content-header nav ul li.group_name{
-	flex: 1;
+.content-header nav ul li .group_close{
+	border: 1px solid limegreen;
+	cursor: pointer;
 }
-
 
 .content-header nav ul li:hover{
 	background-color: #ccf2ff;
@@ -119,19 +129,36 @@ nav ul li.active{
 /*body*/
 .content-body{
 	width: 100%;
-	overflow-y: auto;
 	padding: 20px;
 	border: 1px solid purple;
 	border-radius: 8px;
+	margin: 20px 0;
+	display: grid;
+	grid-template-columns: 85% 15%;
+	
+}
+.users-online{
+	width: 100%;
+	border: 1px solid limegreen;
+	border-radius: 8px;
+	padding: 6px;
+	margin-left: 5px;
+	overflow-wrap: break-word;
+	overflow-y: auto;
 }
 .message{
 	text-align: justify;
 	width: 100%;
 	border: 1px solid lightgray;
 	padding: 6px;
-	margin: 5px 0 ;
-	
+	border-radius: 8px;
+	overflow-y: auto;
 }
+.message-body img{
+	max-width: 200px;
+	max-height: 200px;
+}
+
 .message-header span:nth-child(2){
 	font-size: 13px;
 	color: #A9A9A9;
@@ -149,11 +176,14 @@ nav ul li.active{
 
 }
 .sender-area{
+	padding:5px;
 	display: grid;
-	grid-template-columns: 95% 5%;
+	grid-template-columns: 90% 5% 5%;
 	width: 100%;
 	padding: 10px;	
 	column-gap: 5px;
+	border:1px solid lightgray;
+	border-radius: 8px;
 
 }
 #sender_input{
@@ -164,15 +194,49 @@ nav ul li.active{
 	resize: none;
 	padding: 5px;
 	font-size: 15px;
-	border:1px solid rosybrown;
 	height: 70px;
 }
-.sender-area button{
-	height: 40px;
+.sender_imgUpload{
 	align-self: center;
+	text-align: center;
+}
+.sender-area #btn-send{
+	align-self: center;
+	
+}
+#btn-send img{
+	width: 25px;
+	height: 25px;
+	cursor:pointer;
+}
+.sender_imgUpload img{
+	cursor:pointer;
+	width:25px;
+	height: 25px;
+}
+#btn-send img:hover{
+	transform: scale(1.2);
+}
+.sender_imgUpload img:hover{
+	transform: rotateZ(10deg);
+}
+/*esconder input FIle*/
+#send_input_img{
+	position: absolute;
+	top: -1000px;
 }
 /*others*/
+.progress{
+	height: 10px;
+	display: none;
+	margin: 10px 0;
+}
+.progress-bar{
+	height: 10px;
+	background-color: #32CD32;
+	border-radius: 5px;
 
+}
 
 /*MODAL*/
 

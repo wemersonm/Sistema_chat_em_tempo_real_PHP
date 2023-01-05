@@ -22,6 +22,17 @@
 			}
 			return false;
 		}
+		public function getNamesByArray($groups){
+			$array = array();
+			if(count($groups) > 0){
+				$stmt = $this->db->prepare("SELECT name,id FROM chat.groups WHERE id IN(".(implode(',', $groups) ).")");
+				$stmt->execute();
+				if($stmt->rowCount() > 0){
+					$array = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				}
+			}
+			return $array;
+		}
 		
 	}
  ?>

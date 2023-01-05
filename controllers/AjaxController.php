@@ -69,7 +69,22 @@
 			echo json_encode($array);
 			exit;
 		}
+		public function getUserList(){
+			$array = array('status'=> '1', 'users'=>array());
 
+			$groups = array();
+			if(!empty($_GET['groups'])){
+				$groups = $_GET['groups'];
+			}
+			$groups = explode(',',$groups);
+
+			foreach ($groups as $key => $idGroup) {
+				$array['users'][$idGroup] = $this->users->getUsersInGroup($idGroup);
+			}
+
+			echo json_encode($array);
+			exit;
+		}
 		public function getMessages(){
 			$array = array('status'=> '1', 'msgs'=>array(), 'last_time'=>date('Y-m-d H:i:s'));
 			$messages = new Messages();
@@ -85,10 +100,10 @@
 				$groups = $_GET['groups'];
 			}
 			$groups = explode(',',$groups);
-			// print_r($ult_msg);
-			// echo "--------------------- <br>";
-			// echo gettype($groups);
-			// print_r($groups);exit;
+			
+			$this->users->updateGroups($groups);
+			$this->users->clearGroups();
+
 			while(true){
 				session_write_close();
 				$msgs = $messages->getMessage($ult_msg,$groups);
@@ -107,6 +122,36 @@
 			exit;
 		}
 
-		
+		public function add_photo(){
+			$messages = new Messages();
+			$array = array('status'=> '1','error'=>'0');
+			if(!empty($_POST['id_group'])){
+				$id_group = $_POST['id_group'];
+				$uid = $this->users->getUid();
+
+				$allowed = array('image/png','image/jpeg','image/jpg');
+				if(!empty($_FILES['photo']['tmp_name'])){
+					if(in_array($_FILES['photo']['type'], $allowed)){
+						$nameArchive = md5(time().rand(0,9999)).'.jpg';
+						$url = 'C:/xampp/htdocs/PHP/PROJETOS MASTERS/CHAT/assets/images/photos/';
+						if(move_uploaded_file($_FILES['photo']['tmp_name'],$url.$nameArchive)){
+							$messages->insertMessage($uid,$id_group,$nameArchive,'img');
+						}
+
+					}else{
+						$array['error'] = '1';
+						$array['errorMsg'] = 'Arquivo invalido';
+					}
+				}
+
+				
+			}else{
+				$array['error'] = '1';
+				$array['errorMsg'] = 'Grupo invalido';
+			}
+
+			echo json_encode($array);
+			exit;
+		}
 	}
  ?>

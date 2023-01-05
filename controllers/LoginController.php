@@ -71,18 +71,13 @@
 				}else{
 					$dados['error'] = "Preencha os campos";
 				}
-
-
 			}
-
-			
-
-			
 			// chama a view que vai renderizar na index, que e a view home
 			$this->loadView("register",$dados);
 			
 		}
 
+	
 		
 	}
  ?>

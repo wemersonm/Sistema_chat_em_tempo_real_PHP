@@ -1,6 +1,11 @@
 const btn = document.querySelector(".add_tab");
-
+if(group_list.length > 0){
+	for(let i in group_list){
+		chat.setGroup(group_list[i].id,group_list[i].name);
+	}
+}
 chat.chatActivity();
+chat.userListActivity();
 
 btn.addEventListener('click', e =>{
 	const modal_bg = document.querySelector('.modal_bg');
@@ -41,17 +46,23 @@ btn.addEventListener('click', e =>{
 
 	const ul = document.querySelector('.content-header nav ul');
 	ul.addEventListener('click', e=>{
-		if(e.target.tagName == 'LI'){
-			const id = e.target.getAttribute('data-id');
+		if(e.target.parentNode.tagName == 'LI' && e.target.className == 'group_name'){
+			const id = e.target.parentNode.getAttribute('data-id');
 			chat.setActiveGroup(id);
+		}
+	});
+	ul.addEventListener('click', e=>{
+		if(e.target.parentNode.tagName == 'LI' && e.target.className == 'group_close'){
+			const id = e.target.parentNode.getAttribute('data-id');
+			chat.removeGroup(id);
 		}
 	});
 
 	document.querySelector('#sender_input').addEventListener('keyup',e=>{
 		if(e.keyCode == '13'){
 		 let msg = document.querySelector('#sender_input').value;
-		 console.log(msg);
 		 document.querySelector('#sender_input').value = '';
+		 console.log(msg);
 		 chat.sendMessage(msg);
 		}
 
@@ -86,6 +97,12 @@ function addGroupModal(){
 		}
 
 	});
-
-
 }
+	document.querySelector('.sender_imgUpload').addEventListener('click',e=>{
+		document.querySelector('#send_input_img').click();
+
+	});
+
+	document.querySelector('#send_input_img').addEventListener('change',e=>{
+		chat.sendPhoto(e.target.files[0]);
+	});

@@ -25,11 +25,22 @@
 			}
 			return false;
 		}
-
+		public function clearSession(){
+			$_SESSION['loggedInUser'] = '';
+		}
 		public function getUid(){
 			return $this->uid;
 		}
-
+		public function getNome($id){
+			$array = array();
+			$stmt= $this->db->prepare('SELECT username FROM chat.users WHERE id=:id');
+			$stmt->bindValue(':id',$id);
+			$stmt->execute();
+			if($stmt->rowCount() > 0){
+				$array = $stmt->fetch(PDO::FETCH_ASSOC);
+			}
+			return $array['username'];
+		}
 
 		public function validateUsername($name){
 			if(preg_match('/^[a-z0-9]+$/',$name)){
@@ -74,9 +85,7 @@
 				
 			}
 			return false;
-
 		}
-
 		public function setLoginHash($uid,$loginhash){
 			$stmt = $this->db->prepare("UPDATE users SET loginhash = :loginhash WHERE id = :uid");
 			$stmt->bindValue(":loginhash",$loginhash);
@@ -86,5 +95,57 @@
 			}
 			return false;
 		}
+
+		public function updateGroups($groups){
+			$groupsString = '';
+			if(count($groups) > 0){
+				$groupsString = "!".implode("!",$groups)."!";
+			}
+
+			$stmt = $this->db->prepare("UPDATE chat.users SET users.last_update = NOW(), users.groups=:groups WHERE id=:id");
+			$stmt->bindValue(':groups',$groupsString);
+			$stmt->bindValue(':id',$this->uid);
+			$stmt->execute();
+		}
+		public function clearGroups(){
+			$stmt = $this->db->prepare("UPDATE chat.users SET users.groups='' WHERE users.last_update <
+			 DATE_ADD(NOW(),INTERVAL -2 MINUTE)");
+			$stmt->execute();
+		}
+
+		public function getUsersInGroup($idGroup){
+			$array =array();
+			$stmt = $this->db->prepare("SELECT username FROM chat.users WHERE users.groups LIKE :groups");
+			$stmt->bindValue(':groups','%!'.$idGroup.'!%');
+			$stmt->execute();
+			if($stmt->rowCount() > 0){
+				$list =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+				foreach ($list as $value) {
+				    $array[] = $value['username'];	
+				}
+			}
+
+			return $array;
+		}
+
+		public function getCurrentGroups(){
+			$array = array();
+			$stmt = $this->db->prepare('SELECT users.groups FROM chat.users WHERE id=:id');
+			$stmt->bindValue(':id',$this->uid);
+			$stmt->execute();
+
+			$sql = $stmt->fetch(PDO::FETCH_ASSOC);
+			$array = explode('!',$sql['groups']);
+			if(count($array) > 0){
+				array_pop($array);
+				array_shift($array);	
+				$groups = new Groups();
+				$array = $groups->getNamesByArray($array);			
+			}
+			
+			return $array;
+			
+		}
+
 	}
  ?>
