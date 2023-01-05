@@ -18,6 +18,7 @@
 		public function index(){
 			
 			$dados = array();
+		
 			$dados['currentGroups'] = $this->users->getCurrentGroups();
 			$dados['name'] = $this->users->getNome($this->users->getUid());
 			// print_r($dados['currentGroups']);exit;
