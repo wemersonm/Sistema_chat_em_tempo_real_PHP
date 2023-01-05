@@ -45,6 +45,7 @@ var chat = {
 				this.activeGroup = 0;
 			}
 		}
+		
 		this.updateGroupView();
 		if(this.msgRequest != null){
 			 controller.abort();
