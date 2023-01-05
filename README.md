@@ -1,1 +1,3 @@
-# Sistemade chat em tempo real PHP JS MySQL
+# Sistema de chat em tempo real PHP JS MySQL
+<h2>O que e um sistema de chat em tempo real</h2>
+<p>Um sistema de chat em tempo real é um aplicativo ou plataforma que permite aos usuários conversarem uns com os outros em tempo real. Isso significa que, enquanto um usuário está digitando ou enviando uma mensagem, outro usuário pode imediatamente ver e responder à mensagem. Isso é diferente de um sistema de mensagens que não é em tempo real, onde pode haver um atraso entre o envio e a recepção de mensagens. Sistemas de chat em tempo real são comuns em aplicativos de mensagens, redes sociais e outras plataformas on-line.</p>
