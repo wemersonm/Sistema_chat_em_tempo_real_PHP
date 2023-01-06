@@ -21,8 +21,7 @@
 		
 			$dados['currentGroups'] = $this->users->getCurrentGroups();
 			$dados['name'] = $this->users->getNome($this->users->getUid());
-			// print_r($dados['currentGroups']);exit;
-			// chama a view que vai renderizar na index, que e a view home
+			
 			$this->loadTemplate("home",$dados);
 			
 		}

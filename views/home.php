@@ -8,6 +8,7 @@
 			</div>
 		</div>
 			<nav>
+
 			<ul>
 				
 			</ul>
@@ -15,6 +16,7 @@
 		</nav>
 		</div>
 		<div class="content-body">
+			<h2 class="start-chat">Clique no + para entrar ou criar um grupo</h2 class="start-chat">
 			<div class="message">
 				<div class="message-header">
 					<span></span>
@@ -25,6 +27,7 @@
 				</div>
 			</div>
 			<div class="users-online">
+				<h4>Usuários</h4>
 				<ul>
 					
 				</ul>

@@ -1,3 +1,9 @@
+if(chat.getGroups().length > 0){
+	chat.openData();
+}else{
+	chat.closeData();
+}
+
 const btn = document.querySelector(".add_tab");
 if(group_list.length > 0){
 	for(let i in group_list){

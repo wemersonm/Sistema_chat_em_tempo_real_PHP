@@ -54,6 +54,17 @@ section .container{
 	grid-template-rows: 5% 65% 20%;
 	gap: 15px;
 }
+
+h2.start-chat{
+	background-color:#fff3cd;
+	border: 1px solid #ffe69c;
+	color:#997404;
+	width: 100%;
+	height: 100%;
+	border-radius: 8px;
+	text-align: center;
+
+}
 .content-header {
 	width: 100%;
 	height: 100%;
@@ -93,8 +104,13 @@ section .container{
 	
 }
 .content-header nav ul li .group_close{
-	border: 1px solid limegreen;
+	
 	cursor: pointer;
+
+}
+.content-header nav ul li .group_close:hover{
+	transform: scale(1.4);
+	color: red;
 }
 
 .content-header nav ul li:hover{
@@ -130,7 +146,6 @@ nav ul li.active{
 .content-body{
 	width: 100%;
 	padding: 20px;
-	border: 1px solid purple;
 	border-radius: 8px;
 	margin: 20px 0;
 	display: grid;
@@ -139,12 +154,13 @@ nav ul li.active{
 }
 .users-online{
 	width: 100%;
-	border: 1px solid limegreen;
+	border: 1px solid lightgray;
 	border-radius: 8px;
 	padding: 6px;
 	margin-left: 5px;
 	overflow-wrap: break-word;
 	overflow-y: auto;
+	text-align: center;
 }
 .message{
 	text-align: justify;
@@ -153,6 +169,7 @@ nav ul li.active{
 	padding: 6px;
 	border-radius: 8px;
 	overflow-y: auto;
+
 }
 .message-body img{
 	max-width: 200px;
@@ -173,6 +190,7 @@ nav ul li.active{
 .content-footer{
 	width: 100%;
 	height: 100%;
+	display: none;
 
 }
 .sender-area{

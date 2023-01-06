@@ -31,6 +31,25 @@ var chat = {
 			 controller.abort();
 		}
 	},
+	openData:function(){
+		if(this.groups.length > 0){
+			
+			document.querySelector('.users-online').style.display = 'block';
+			document.querySelector('.message').style.display = 'block';
+			document.querySelector('.content-body').style.removeProperty = 'display';
+			document.querySelector('.content-footer').style.display = 'block';
+			document.querySelector('.start-chat').style.display = 'none';
+
+		}
+	},
+	closeData:function(){
+		if(this.groups.length == 0){
+			document.querySelector('.users-online').style.display = 'none';
+			document.querySelector('.message').style.display = 'none';
+			document.querySelector('.content-footer').style.display = 'none';
+			document.querySelector('.start-chat').style.display = 'block';
+		}
+	},
 	removeGroup:function(id){
 		for(let i in this.groups){
 			if(this.groups[i].id == id){
@@ -43,6 +62,7 @@ var chat = {
 				this.setActiveGroup(this.groups[0].id);		
 			}else{
 				this.activeGroup = 0;
+				chat.closeData();
 				chat.closeLastGroup();
 			}
 		}
@@ -117,12 +137,13 @@ var chat = {
 		}
 		document.querySelector('.content-header nav ul').innerHTML = html;
 		this.loadConversation();
+		
 	}, 
 
 	setActiveGroup:function(id){
 		this.activeGroup = id;
 		this.loadConversation();
-
+		chat.openData();
 	},
 
 	getActiveGroup:function(){
